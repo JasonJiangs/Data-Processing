@@ -4,16 +4,22 @@
 	代码方面主要是写了一个模块(data_Refreshing_module)，将各类方法整合后以直接引用的形式处理各个省市的数据。
 我们需要收集和处理的数据是在各个省市各地区一年度的各个维度的数据，每一个维度的数据经过手动收集后集成多个格式相同的excel表格，再用python进行数据的清洗工作。
 下面分析data_refreshing_module模块的各个方法。
+
 def combine_two_dataframe(df1, df2): 
 首先合并两个excel表的内容。这里有两个点需要注意，一个是合并的是维度数据而不是时间跨度的数据，因此需要横向合并数据的列。第二点是excel表会重复表头，也就是各个地区的列，因此在合并完成后需要将重复的列删除其一。
+
 def batch_process_csv(dir_str):
 	该方法将会用来批量合并各个维度的excel表格，避免代码的重复和累赘，这里将会用到combine_two_dataframe方法。这里用到os库，定位到放置所有维度csv文件的的文件夹下，利用循环一一读取所有csv文件并合并成一个表格后返回。
+
 def city_code_assign(df):
 	由于数据的组织形式，该方法并没有用到。方法用于给每一个地区附上它们的编码，结果放置于新的最后一列。由于处理数据的形式，每一个城市或区县只出现一次，因此人工赋值效率更高。
+
 def rank_city_code(df):
 	方法用于按城市的编码给所有城市排序。当人工赋值完成之后，使用该方法给所有地区或城市进行按照编码的排序。
+
 def missing_data_filling(df):
 	方法用于按照要求为所有excel表中的缺失值进行补全。
+
 下面是对特定省市数据清洗代码的分析。
 首先用到的sys库导入data_refreshing_module作为临时库使用。定位到所有维度csv文件所在的文件夹的位置之后用batch_process_csv方法返回合并所有数据的dataframe并输出csv文件，命名为raw result。
 将该csv文件进行人工赋值各地区或城市的编码后，重新读入成dataframe。使用rank_city_code和missing_data_filling方法进行排序和缺失值处理。最后的输出是清洗完成后的数据，命名成finished result.
