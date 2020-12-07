@@ -1,4 +1,5 @@
 # Data Process
+The code is realizing a logic to process some excels with certains types. Applying Pandas mainly, but also with libraries like os and sys, which help with wrapping methods and using the code dircetly in batch processing. 
  
 代码思路分析
 	代码方面主要是写了一个模块(data_Refreshing_module)，将各类方法整合后以直接引用的形式处理各个省市的数据。
